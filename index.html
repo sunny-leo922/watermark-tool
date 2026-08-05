@@ -682,9 +682,16 @@ function renderTabs() {
     el.addEventListener("click", () => selectCat(el.dataset.cat));
   });
 
-  // 顶栏导航同步
+  // 顶栏导航：同步激活态（事件在 initNavTabs 中只绑定一次）
   document.querySelectorAll(".nav-tab").forEach(el => {
     el.classList.toggle("active", el.dataset.cat === currentCat);
+  });
+}
+
+/* ===== 顶栏导航：绑定分类切换（只初始化一次） ===== */
+function initNavTabs() {
+  document.querySelectorAll(".nav-tab").forEach(el => {
+    el.addEventListener("click", () => selectCat(el.dataset.cat));
   });
 }
 
@@ -774,6 +781,7 @@ if (fromWechat) {
 renderStats();
 renderTabs();
 renderGrid();
+initNavTabs();
 </script>
 
 </body>
