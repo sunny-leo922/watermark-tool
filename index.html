@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小刚资源站 · 免费工具与教程分享</title>
+<meta name="description" content="分享自研免费软件工具与实用教程，本地离线运行，数据不上传。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  /* ===== Design Tokens (ui-ux-pro-max · Dark OLED) ===== */
+  :root {
+    --color-primary: #1E3A5F;
+    --color-on-primary: #FFFFFF;
+    --color-accent: #22C55E;
+    --color-accent-hover: #16A34A;
+    --color-background: #0F172A;
+    --color-foreground: #FFFFFF;
+    --color-muted: #10192E;
+    --color-text-secondary: #94A3B8;
+    --color-border: rgba(255,255,255,0.08);
+    --font-display: "Orbitron", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --shadow-glow: 0 0 24px rgba(34,197,94,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--color-background);
+    color: var(--color-foreground);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .bg-glow {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% -5%, rgba(30,58,95,0.45) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 85% 20%, rgba(34,197,94,0.10) 0%, transparent 60%);
+  }
+
+  a { color: var(--color-accent); text-decoration: none; }
+  img, svg { display: block; max-width: 100%; }
+
+  /* ===== 导航栏 ===== */
+  .navbar {
+    background: rgba(15,23,42,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 16px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .navbar .logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--color-foreground);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .navbar .logo .logo-badge {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #22C55E, #16A34A);
+    display: grid;
+    place-items: center;
+    box-shadow: var(--shadow-glow);
+  }
+  .navbar .logo span.hl { color: var(--color-accent); }
+  .navbar nav { display: flex; gap: 24px; align-items: center; }
+  .navbar nav a {
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    transition: color 0.2s ease;
+    padding: 6px 2px;
+    cursor: pointer;
+  }
+  .navbar nav a:hover { color: var(--color-foreground); }
+  .navbar nav a:focus-visible,
+  .navbar nav a.active {
+    outline: none;
+    color: var(--color-accent);
+  }
+  .navbar nav a.nav-tab.active { font-weight: 700; }
+  .navbar nav a.cta-link { color: var(--color-accent); font-weight: 600; }
+
+  /* ===== Hero ===== */
+  .hero {
+    text-align: center;
+    padding: 84px 5% 56px;
+    position: relative;
+  }
+  .hero .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    background: rgba(34,197,94,0.10);
+    border: 1px solid rgba(34,197,94,0.25);
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 28px;
+  }
+  .hero .eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 5.5vw, 52px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(34,197,94,0.15);
+  }
+  .hero h1 .hl { color: var(--color-accent); }
+  .hero .sub {
+    font-size: clamp(15px, 2.2vw, 19px);
+    color: var(--color-text-secondary);
+    max-width: 620px;
+    margin: 0 auto 32px;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+  .hero-stat .label { font-size: 12px; color: var(--color-text-secondary); }
+
+  /* ===== 分类 Tab ===== */
+  .cat-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 8px auto 48px;
+    max-width: 900px;
+    padding: 0 5%;
+  }
+  .cat-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    user-select: none;
+  }
+  .cat-tab svg { width: 16px; height: 16px; }
+  .cat-tab:hover { border-color: rgba(34,197,94,0.4); color: var(--color-foreground); }
+  .cat-tab.active {
+    background: rgba(34,197,94,0.12);
+    border-color: rgba(34,197,94,0.5);
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+  .cat-tab .count {
+    font-size: 12px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    padding: 1px 8px;
+  }
+  .cat-tab.active .count { background: rgba(34,197,94,0.2); }
+
+  /* ===== 分享网格 ===== */
+  .section { padding: 8px 5% 72px; max-width: 1120px; margin: 0 auto; }
+  .section-head { text-align: center; margin-bottom: 40px; }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.5vw, 34px);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .section-head p { color: var(--color-text-secondary); }
+
+  .share-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .share-card {
+    background: var(--color-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .share-card:hover { transform: translateY(-4px); border-color: rgba(34,197,94,0.35); }
+  .share-card .card-top { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+  .share-card .icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(34,197,94,0.10);
+    border: 1px solid rgba(34,197,94,0.25);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .share-card .icon svg { width: 26px; height: 26px; color: var(--color-accent); }
+  .share-card .icon img.card-img { width: 34px; height: 34px; object-fit: contain; border-radius: 8px; }
+  .share-card .title-wrap { min-width: 0; }
+  .share-card .card-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; line-height: 1.4; }
+  .share-card .card-tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+    padding: 2px 10px;
+    border-radius: 999px;
+  }
+  .share-card .card-tag.soft { color: var(--color-accent); border-color: rgba(34,197,94,0.4); }
+  .share-card .card-tag.doc { color: #38BDF8; border-color: rgba(56,189,248,0.4); }
+  .share-card .card-desc {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    flex-grow: 1;
+    margin-bottom: 20px;
+  }
+  .share-card .card-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .share-card .card-meta span { display: inline-flex; align-items: center; gap: 5px; }
+  .share-card .card-meta svg { width: 13px; height: 13px; color: var(--color-accent); }
+  .share-card .card-actions { display: flex; gap: 12px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    text-decoration: none;
+  }
+  .btn svg { width: 16px; height: 16px; }
+  .btn:focus-visible { outline: 3px solid var(--color-foreground); outline-offset: 2px; }
+  .btn-primary {
+    background: linear-gradient(135deg, #22C55E, #16A34A);
+    color: #052e16;
+  }
+  .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: var(--shadow-glow); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+  }
+  .btn-ghost:hover { color: var(--color-foreground); border-color: rgba(255,255,255,0.25); }
+  .btn-ghost:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+  /* ===== 空状态 ===== */
+  .empty {
+    text-align: center;
+    padding: 56px 20px;
+    color: var(--color-text-secondary);
+    border: 1px dashed var(--color-border);
+    border-radius: 16px;
+  }
+  .empty svg { width: 40px; height: 40px; margin: 0 auto 14px; color: var(--color-text-secondary); opacity: 0.5; }
+  .empty h4 { font-size: 16px; color: var(--color-foreground); margin-bottom: 6px; }
+  .empty p { font-size: 14px; }
+
+  /* ===== 安全承诺 ===== */
+  .trust {
+    padding: 72px 5%;
+    border-top: 1px solid var(--color-border);
+    background: linear-gradient(180deg, transparent, rgba(30,58,95,0.22) 50%, transparent);
+  }
+  .trust .inner { max-width: 1120px; margin: 0 auto; }
+  .trust .section-head { text-align: center; margin-bottom: 48px; }
+  .trust .section-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.5vw, 34px);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .trust .section-head p { color: var(--color-text-secondary); }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .trust-item {
+    background: var(--color-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .trust-item:hover { transform: translateY(-4px); border-color: rgba(34,197,94,0.35); }
+  .trust-item .icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(34,197,94,0.10);
+    border: 1px solid rgba(34,197,94,0.25);
+    display: grid;
+    place-items: center;
+    margin: 0 auto 16px;
+  }
+  .trust-item .icon svg { width: 24px; height: 24px; color: var(--color-accent); }
+  .trust-item h4 { font-size: 17px; margin-bottom: 6px; }
+  .trust-item p { font-size: 13px; color: var(--color-text-secondary); }
+
+  /* ===== 联系我们 ===== */
+  .contact {
+    padding: 72px 5%;
+    border-top: 1px solid var(--color-border);
+  }
+  .contact .inner { max-width: 900px; margin: 0 auto; }
+  .contact .section-head { text-align: center; margin-bottom: 44px; }
+  .contact .section-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.5vw, 32px);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .contact .section-head p { color: var(--color-text-secondary); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    align-items: stretch;
+  }
+  .contact-card {
+    background: var(--color-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .contact-card:hover { transform: translateY(-4px); border-color: rgba(34,197,94,0.35); }
+  .contact-card .icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(34,197,94,0.10);
+    border: 1px solid rgba(34,197,94,0.25);
+    display: grid;
+    place-items: center;
+    margin-bottom: 16px;
+  }
+  .contact-card .icon svg { width: 24px; height: 24px; color: var(--color-accent); }
+  .contact-card h4 { font-size: 17px; margin-bottom: 8px; }
+  .contact-card p { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 16px; }
+  .contact-card .qr {
+    width: 132px;
+    height: 132px;
+    border-radius: 12px;
+    background: #fff;
+    padding: 6px;
+    margin-bottom: 10px;
+  }
+  .contact-card .qr img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
+  .contact-card .qr.placeholder {
+    background: rgba(255,255,255,0.05);
+    border: 1px dashed rgba(255,255,255,0.2);
+    display: grid;
+    place-items: center;
+    color: var(--color-text-secondary);
+    font-size: 12px;
+  }
+  .contact-card .qr.placeholder svg { width: 32px; height: 32px; margin-bottom: 6px; opacity: 0.5; }
+  .contact-card .btn-mail {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: 10px;
+    background: rgba(34,197,94,0.12);
+    border: 1px solid rgba(34,197,94,0.4);
+    color: var(--color-accent);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    text-decoration: none;
+  }
+  .contact-card .btn-mail:hover { background: rgba(34,197,94,0.2); border-color: rgba(34,197,94,0.6); }
+  .contact-card .btn-mail svg { width: 16px; height: 16px; }
+  .contact-card .note { font-size: 12px; color: #64748B; }
+
+  /* ===== 页脚 ===== */
+  .footer {
+    text-align: center;
+    padding: 40px 5%;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    font-size: 13px;
+  }
+  .footer p { margin-top: 6px; }
+  .footer a:hover { text-decoration: underline; }
+
+  /* ===== 动效 ===== */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero .eyebrow .dot { animation: none; }
+    .share-card, .btn { transition: none; }
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 768px) {
+    .hero { padding: 60px 5% 40px; }
+    .navbar { padding: 14px 5%; }
+    .navbar nav { gap: 14px; }
+    .navbar nav a { font-size: 13px; }
+    .section { padding-bottom: 56px; }
+    .hero-stats { gap: 24px; }
+    .cat-tabs { margin-bottom: 36px; }
+  }
+  @media (max-width: 480px) {
+    .navbar nav a.nav-hide { display: none; }
+    .cat-tab { padding: 8px 16px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<!-- ===== 导航栏 ===== -->
+<div class="navbar">
+  <div class="logo">
+    <span class="logo-badge">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#052e16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    </span>
+    <span>小刚<span class="hl">资源</span>站</span>
+  </div>
+  <nav>
+    <a class="nav-tab active" data-cat="all">全部</a>
+    <a class="nav-tab" data-cat="soft">软件工具</a>
+    <a class="nav-tab nav-hide" data-cat="doc">文档教程</a>
+    <a href="mailto:esadmin@126.com" class="cta-link">联系</a>
+  </nav>
+</div>
+
+<!-- ===== Hero ===== -->
+<header class="hero">
+  <div class="eyebrow"><span class="dot"></span>自研工具 · 实用教程 · 免费分享</div>
+  <h1>分享好工具，<span class="hl">助你更高效</span></h1>
+  <p class="sub">小刚自研的免费软件工具和实用教程，全部本地离线运行，数据不上传。持续更新，欢迎收藏。</p>
+  <div class="hero-stats" id="heroStats"></div>
+</header>
+
+<!-- ===== 分类 Tab ===== -->
+<div class="cat-tabs" id="catTabs"></div>
+
+<!-- ===== 分享内容 ===== -->
+<section class="section">
+  <div class="share-grid" id="shareGrid"></div>
+  <div class="empty" id="emptyState" style="display:none;">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    <h4>该分类暂无内容</h4>
+    <p>内容持续更新中，敬请期待</p>
+  </div>
+</section>
+
+<!-- ===== 安全承诺 ===== -->
+<section class="trust">
+  <div class="inner">
+    <div class="section-head">
+      <h2>安全承诺</h2>
+      <p>隐私保护是第一优先级，从设计上就为你的信息安全兜底</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h4>本地离线处理</h4>
+        <p>所有操作在你的电脑上完成，不经过任何网络服务器</p>
+      </div>
+      <div class="trust-item">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v5"/><rect x="2" y="11" width="20" height="8" rx="2"/><path d="M7 15h.01"/><path d="M11 15h.01"/></svg></div>
+        <h4>数据绝不上传</h4>
+        <p>图片只在本地处理，没有任何上传或收集行为</p>
+      </div>
+      <div class="trust-item">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-6 4 3 5-8"/></svg></div>
+        <h4>断网也能用</h4>
+        <p>不需要联网即可使用，隐私与便利兼得</p>
+      </div>
+      <div class="trust-item">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+        <h4>完全免费无广告</h4>
+        <p>自研分享，无广告、无追踪、无隐藏收费</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 联系我们 ===== -->
+<section class="contact">
+  <div class="inner">
+    <div class="section-head">
+      <h2>联系我们</h2>
+      <p>有问题、建议或合作，欢迎通过以下方式找到我们</p>
+    </div>
+    <div class="contact-grid">
+      <!-- 邮箱 -->
+      <div class="contact-card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></div>
+        <h4>邮件支持</h4>
+        <p>一般问题请优先发邮件，我们会在 1-2 个工作日内回复</p>
+        <a class="btn-mail" href="mailto:esadmin@126.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+          发送邮件
+        </a>
+      </div>
+      <!-- QQ 二维码 -->
+      <div class="contact-card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div>
+        <h4>QQ 咨询</h4>
+        <p>扫码添加 QQ 工作号，即时沟通更方便</p>
+        <div class="qr" id="qqQr"><!-- QQ 二维码图片占位：放入 assets/qq-qr.png --></div>
+        <p class="note">QQ 工作号 · 请备注来源</p>
+      </div>
+      <!-- 微信二维码 -->
+      <div class="contact-card">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <h4>微信咨询</h4>
+        <p>扫码添加微信工作号，获取一对一帮助</p>
+        <div class="qr" id="wechatQr"><!-- 微信二维码图片占位：放入 assets/wechat-qr.png --></div>
+        <p class="note">微信工作号 · 请备注来源</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 页脚 ===== -->
+<footer class="footer">
+  <p>小刚资源站 · 免费分享 · 本地离线运行 · 数据不上传</p>
+  <p>问题反馈 | <a href="mailto:esadmin@126.com">邮件支持</a></p>
+  <p style="color:#64748B;">© 2026 小刚资源站 · 保留所有权利</p>
+</footer>
+
+<script>
+/* ============================================================
+ * 分享项数据配置
+ * ------------------------------------------------------------
+ * 以后新增分享内容，只需两步：
+ *   1. 把文件上传到 files/ 目录
+ *   2. 在下方 shareItems 数组里加一项（复制现有项改即可）
+ *
+ * 字段说明：
+ *   cat    : 分类。soft=软件工具 / doc=文档教程
+ *   name   : 标题
+ *   desc   : 描述
+ *   tag    : 小标签（如「Windows」）
+ *   icon   : 图标类型。tool/file/book/doc 任选
+ *   file   : 文件相对路径（files/ 下的文件）
+ *   size   : 显示文件大小
+ *   btnText: 按钮文字
+ *   img    : 可选，自定义图标图片路径（assets/ 下），有则显示图片
+ *   url    : 可选，指向外部链接（有 url 时按钮用 url，否则用 file）
+ * ============================================================ */
+const shareItems = [
+  {
+    cat: "soft",
+    name: "证件水印工具",
+    desc: "发证件照前先打水印，防止信息被滥用。本地离线处理、数据不上传，支持自定义机构/日期/附加信息，一键批量生成防伪水印。",
+    tag: "Windows",
+    icon: "shield",
+    img: "assets/app_icon.png",
+    file: "files/证件水印工具.zip",
+    size: "32 MB",
+    btnText: "下载工具"
+  },
+  {
+    cat: "doc",
+    name: "证件水印工具 · 使用说明",
+    desc: "证件水印工具的使用教程：了解水印强度、方向调整、图片质量等各项设置，帮你快速上手。",
+    tag: "教程",
+    icon: "doc",
+    file: "",
+    size: "待补充",
+    btnText: "暂未上线"
+  }
+];
+
+/* ===== 图标库（SVG） ===== */
+const icons = {
+  shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  tool: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+  file: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'
+};
+
+const catConfig = {
+  all: { label: "全部", icon: icons.file },
+  soft: { label: "软件工具", icon: icons.tool },
+  doc: { label: "文档教程", icon: icons.book }
+};
+
+let currentCat = "all";
+
+/* ===== 渲染 ===== */
+function renderStats() {
+  const soft = shareItems.filter(i => i.cat === "soft").length;
+  const doc = shareItems.filter(i => i.cat === "doc").length;
+  document.getElementById("heroStats").innerHTML = `
+    <div class="hero-stat"><div class="num">${soft}</div><div class="label">软件工具</div></div>
+    <div class="hero-stat"><div class="num">${doc}</div><div class="label">文档教程</div></div>
+    <div class="hero-stat"><div class="num">${shareItems.length}</div><div class="label">全部内容</div></div>`;
+}
+
+function renderTabs() {
+  const counts = { all: shareItems.length };
+  ["soft", "doc"].forEach(c => counts[c] = shareItems.filter(i => i.cat === c).length);
+  const tabs = Object.keys(catConfig).map(cat => `
+    <div class="cat-tab ${cat === currentCat ? 'active' : ''}" data-cat="${cat}">
+      ${catConfig[cat].icon}<span>${catConfig[cat].label}</span><span class="count">${counts[cat]}</span>
+    </div>`).join("");
+  document.getElementById("catTabs").innerHTML = tabs;
+
+  document.querySelectorAll(".cat-tab").forEach(el => {
+    el.addEventListener("click", () => selectCat(el.dataset.cat));
+  });
+
+  // 顶栏导航同步
+  document.querySelectorAll(".nav-tab").forEach(el => {
+    el.classList.toggle("active", el.dataset.cat === currentCat);
+  });
+}
+
+function renderGrid() {
+  const items = shareItems.filter(i => currentCat === "all" || i.cat === currentCat);
+  const grid = document.getElementById("shareGrid");
+  const empty = document.getElementById("emptyState");
+
+  if (items.length === 0) {
+    grid.innerHTML = "";
+    empty.style.display = "block";
+    return;
+  }
+  empty.style.display = "none";
+
+  grid.innerHTML = items.map(item => {
+    const catLabel = catConfig[item.cat].label;
+    const catClass = item.cat === "soft" ? "soft" : "doc";
+    const hasFile = !!item.file;
+    const href = item.url || item.file || "#";
+    const btn = hasFile
+      ? `<a class="btn btn-primary" href="${href}" download>${icons.file}${item.btnText || "下载"}</a>`
+      : `<button class="btn btn-primary" disabled>${icons.file}${item.btnText || "暂未上线"}</button>`;
+    const cardIcon = item.img
+      ? `<img class="card-img" src="${item.img}" alt="${item.name} 图标" loading="lazy">`
+      : (icons[item.icon] || icons.tool);
+    return `
+      <div class="share-card" data-cat="${item.cat}">
+        <div class="card-top">
+          <div class="icon">${cardIcon}</div>
+          <div class="title-wrap">
+            <div class="card-title">${item.name}</div>
+            <span class="card-tag ${catClass}">${item.tag || catLabel}</span>
+          </div>
+        </div>
+        <p class="card-desc">${item.desc}</p>
+        <div class="card-meta">
+          <span>${icons.file}${item.size || ""}</span>
+          <span>${catConfig[item.cat].icon}${catLabel}</span>
+        </div>
+        <div class="card-actions">${btn}</div>
+      </div>`;
+  }).join("");
+}
+
+function selectCat(cat) {
+  currentCat = cat;
+  renderTabs();
+  renderGrid();
+}
+
+/* ===== 二维码占位/加载 =====
+ * 若 assets/ 下存在对应二维码图片则显示，否则显示占位提示。
+ * 你只需把二维码图片命名为 assets/qq-qr.png 和 assets/wechat-qr.png 即可生效。 */
+function loadQr(elId, imgPath) {
+  const box = document.getElementById(elId);
+  if (!box) return;
+  const probe = new Image();
+  probe.onload = () => {
+    box.classList.remove("placeholder");
+    box.innerHTML = `<img src="${imgPath}" alt="扫码二维码" loading="lazy">`;
+  };
+  probe.onerror = () => {
+    box.classList.add("placeholder");
+    box.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      二维码待补充`;
+  };
+  probe.src = imgPath;
+}
+
+/* ===== 初始化 ===== */
+renderStats();
+renderTabs();
+renderGrid();
+loadQr("qqQr", "assets/qq-qr.png");
+loadQr("wechatQr", "assets/wechat-qr.png");
+</script>
+
+</body>
+</html>
