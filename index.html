@@ -712,11 +712,11 @@ function renderGrid() {
     const catClass = item.cat === "soft" ? "soft" : "doc";
     const hasFile = !!item.file;
     const href = item.url || item.file || "#";
-    // HTML 文档用新标签页打开查看，其他文件（zip/exe）用 download 下载
+    // HTML 文档在当前页直接跳转查看，其他文件（zip/exe）用 download 下载
     const isHtmlDoc = /\.html?$/i.test(href) && !item.url;
     const btn = hasFile
       ? (isHtmlDoc
-          ? `<a class="btn btn-primary" href="${href}" target="_blank" rel="noopener">${icons.book}${item.btnText || "查看"}</a>`
+          ? `<a class="btn btn-primary" href="${href}">${icons.book}${item.btnText || "查看"}</a>`
           : `<a class="btn btn-primary" href="${href}" download>${icons.file}${item.btnText || "下载"}</a>`)
       : `<button class="btn btn-primary" disabled>${icons.file}${item.btnText || "暂未上线"}</button>`;
     const cardIcon = item.img
