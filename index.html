@@ -636,7 +636,7 @@ const shareItems = [
     desc: "证件水印工具的使用教程：了解水印强度、方向调整、图片质量等各项设置，帮你快速上手。",
     tag: "教程",
     icon: "doc",
-    file: "files/证件水印工具-使用说明.md",
+    file: "files/证件水印工具-使用说明.html",
     size: "在线查看",
     btnText: "查看说明"
   }
@@ -712,8 +712,12 @@ function renderGrid() {
     const catClass = item.cat === "soft" ? "soft" : "doc";
     const hasFile = !!item.file;
     const href = item.url || item.file || "#";
+    // HTML 文档用新标签页打开查看，其他文件（zip/exe）用 download 下载
+    const isHtmlDoc = /\.html?$/i.test(href) && !item.url;
     const btn = hasFile
-      ? `<a class="btn btn-primary" href="${href}" download>${icons.file}${item.btnText || "下载"}</a>`
+      ? (isHtmlDoc
+          ? `<a class="btn btn-primary" href="${href}" target="_blank" rel="noopener">${icons.book}${item.btnText || "查看"}</a>`
+          : `<a class="btn btn-primary" href="${href}" download>${icons.file}${item.btnText || "下载"}</a>`)
       : `<button class="btn btn-primary" disabled>${icons.file}${item.btnText || "暂未上线"}</button>`;
     const cardIcon = item.img
       ? `<img class="card-img" src="${item.img}" alt="${item.name} 图标" loading="lazy">`

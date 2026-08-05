@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>证件水印工具 · 使用说明</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #0F172A;
+    color: #E2E8F0;
+    line-height: 1.8;
+  }
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 24px 72px;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(34,197,94,0.12);
+    border: 1px solid rgba(34,197,94,0.35);
+    color: #22C55E;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 4px 14px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .meta {
+    color: #64748B;
+    font-size: 14px;
+    margin-bottom: 36px;
+  }
+  .meta b { color: #94A3B8; font-weight: 600; }
+  .section {
+    background: #10192E;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 28px 28px 12px;
+    margin-bottom: 20px;
+  }
+  .section h2 {
+    font-size: 19px;
+    color: #22C55E;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .section p { margin-bottom: 12px; color: #C7D2E0; font-size: 15px; }
+  .section ul, .section ol { margin: 0 0 16px 22px; }
+  .section li { margin-bottom: 8px; color: #C7D2E0; font-size: 15px; }
+  .section b, .section strong { color: #fff; }
+  .section code {
+    background: rgba(34,197,94,0.1);
+    color: #4ADE80;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 16px;
+    font-size: 14px;
+  }
+  th {
+    text-align: left;
+    background: rgba(34,197,94,0.08);
+    color: #22C55E;
+    font-weight: 700;
+    padding: 10px 14px;
+  }
+  td {
+    padding: 10px 14px;
+    color: #C7D2E0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .qa { margin-bottom: 16px; }
+  .qa .q { color: #fff; font-weight: 700; margin-bottom: 4px; }
+  .qa .a { color: #C7D2E0; font-size: 15px; }
+  .tip {
+    background: rgba(34,197,94,0.06);
+    border-left: 3px solid #22C55E;
+    padding: 12px 16px;
+    border-radius: 0 10px 10px 0;
+    color: #C7D2E0;
+    font-size: 14px;
+    margin: 12px 0;
+  }
+  .footer-note {
+    text-align: center;
+    color: #64748B;
+    font-size: 13px;
+    margin-top: 40px;
+  }
+  @media (max-width: 480px) {
+    .container { padding: 32px 16px 56px; }
+    h1 { font-size: 24px; }
+    .section { padding: 22px 20px 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="badge">使用说明 · v1.0.0 · Windows 10/11</div>
+  <h1>证件水印工具 · 使用说明</h1>
+  <div class="meta"><b>定位</b>：给证件照添加防伪水印，保护个人隐私，防止信息被滥用</div>
+
+  <div class="section">
+    <h2>一、工具简介</h2>
+    <p>证件水印工具是一款<b>本地离线运行</b>的证件图片处理小工具。在发送证件照（身份证、营业执照等）前，给图片加上「特定用途」水印，防止对方裁剪、抠图、或转手滥用你的证件信息。</p>
+    <ul>
+      <li>🔒 <b>全程本地处理</b>，图片不上传任何服务器</li>
+      <li>⚡ <b>3 秒一键生成</b>，无需 PS</li>
+      <li>🆓 <b>完全免费</b>，无广告</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>二、安装与运行</h2>
+    <ol>
+      <li>下载 <code>证件水印工具.zip</code>（约 32MB）</li>
+      <li><b>先解压</b>整个 zip 文件夹（不要只解压 exe）</li>
+      <li>进入解压后的文件夹，双击运行 <code>IdWatermarkTool.exe</code></li>
+      <li><b>无需安装</b>，直接运行即可</li>
+    </ol>
+    <div class="tip">工具是「绿色免安装」版，解压后整个文件夹要保持完整（里面有运行所需的依赖文件），不要单独把 exe 拷走。</div>
+  </div>
+
+  <div class="section">
+    <h2>三、快速上手（三步）</h2>
+    <p><b>第 1 步：添加图片</b></p>
+    <p>点击「添加图片」按钮，可<b>多选</b>证件图片。支持身份证正反面、营业执照等常见图片格式。</p>
+    <p><b>第 2 步：填写水印信息</b></p>
+    <ul>
+      <li><b>机构/用途名称</b>：填写你要发给哪家机构或什么用途（如「XX公司 开户资料」「租房备案」）</li>
+      <li><b>日期</b>：自动填充当天日期，可手动修改</li>
+      <li><b>附加行</b>（可选）：额外补充一行说明文字</li>
+    </ul>
+    <p><b>第 3 步：一键生成</b></p>
+    <p>选择水印强度和输出质量，点击「生成水印图片」，自动保存到输出目录，即可得到打好的水印图。</p>
+  </div>
+
+  <div class="section">
+    <h2>四、参数详解</h2>
+    <table>
+      <tr><th>参数</th><th>说明</th><th>建议</th></tr>
+      <tr><td>水印强度</td><td>轻 / 中 / 密</td><td>常规选「轻」，清晰又不影响阅读</td></tr>
+      <tr><td>方向</td><td>自动转横向 / 纵向 / 手动旋转</td><td>竖拍的身份证选「自动转横向」</td></tr>
+      <tr><td>透明度</td><td>水印深浅</td><td>默认即可，可按需调节</td></tr>
+      <tr><td>最长边</td><td>输出图片尺寸</td><td>满足接收方要求即可</td></tr>
+      <tr><td>JPEG 质量</td><td>图片压缩质量</td><td>建议 80-90，清晰且体积小</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>五、常见问题</h2>
+    <div class="qa">
+      <div class="q">Q1：生成的图片看不清水印？</div>
+      <div class="a">降低透明度会影响水印可见度，可适当提高水印强度或减小透明度值，让水印更清晰。</div>
+    </div>
+    <div class="qa">
+      <div class="q">Q2：竖拍的身份证方向不对？</div>
+      <div class="a">在「方向」里选自动转横向，工具会自动把竖拍的证件旋转对齐。</div>
+    </div>
+    <div class="qa">
+      <div class="q">Q3：图片会不会被上传到网上？</div>
+      <div class="a">不会。工具所有处理都在你本机完成，没有任何上传、联网收集行为，断网也能正常使用。</div>
+    </div>
+    <div class="qa">
+      <div class="q">Q4：工具需要安装吗？</div>
+      <div class="a">不需要。下载后解压，双击 exe 即可运行，绿色免安装。</div>
+    </div>
+    <div class="qa">
+      <div class="q">Q5：水印打上去后还能去掉吗？</div>
+      <div class="a">水印是直接绘制在图片上的，无法简单去除，这正是防伪的目的。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>六、隐私与安全</h2>
+    <ul>
+      <li>所有图片处理都在<b>本地电脑</b>完成，不经过任何网络服务器</li>
+      <li>工具不联网、不上传、不收集任何信息</li>
+      <li>断网状态下功能完整可用</li>
+      <li>请妥善保管你的证件原件，打上水印再对外发送更安心</li>
+    </ul>
+  </div>
+
+  <div class="footer-note">本工具仅用于保护个人隐私信息，请合理使用。</div>
+
+</div>
+</body>
+</html>
