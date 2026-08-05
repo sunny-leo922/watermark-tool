@@ -486,7 +486,7 @@
     <a class="nav-tab active" data-cat="all">全部</a>
     <a class="nav-tab" data-cat="soft">软件工具</a>
     <a class="nav-tab nav-hide" data-cat="doc">文档教程</a>
-    <a href="mailto:esadmin@126.com" class="cta-link">联系</a>
+    <a id="navContact" href="mailto:esadmin@126.com" class="cta-link" style="display:none;">联系</a>
   </nav>
 </div>
 
@@ -543,8 +543,8 @@
   </div>
 </section>
 
-<!-- ===== 联系我们 ===== -->
-<section class="contact">
+<!-- ===== 联系我们（默认隐藏，仅 ?from=wechat 时显示） ===== -->
+<section class="contact" id="contactSection" style="display:none;">
   <div class="inner">
     <div class="section-head">
       <h2>联系我们</h2>
@@ -746,12 +746,24 @@ function loadQr(elId, imgPath) {
   probe.src = imgPath;
 }
 
+/* ===== 联系方式显示控制 =====
+ * 默认隐藏 QQ/微信/邮箱联系方式，仅当 URL 带 ?from=wechat（公众号/视频号链路）时才显示。
+ * 这样抖音/小红书用户直接访问时看不到任何站外联系方式，避免违规判定。 */
+const urlParams = new URLSearchParams(window.location.search);
+const fromWechat = urlParams.get("from") === "wechat";
+if (fromWechat) {
+  const contactSection = document.getElementById("contactSection");
+  const navContact = document.getElementById("navContact");
+  if (contactSection) contactSection.style.display = "block";
+  if (navContact) navContact.style.display = "inline-block";
+  loadQr("qqQr", "assets/qq-qr.png");
+  loadQr("wechatQr", "assets/wechat-qr.png");
+}
+
 /* ===== 初始化 ===== */
 renderStats();
 renderTabs();
 renderGrid();
-loadQr("qqQr", "assets/qq-qr.png");
-loadQr("wechatQr", "assets/wechat-qr.png");
 </script>
 
 </body>
