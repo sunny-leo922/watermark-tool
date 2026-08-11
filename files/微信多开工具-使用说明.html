@@ -1,85 +1,221 @@
-# 微信多开工具 · 使用说明
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微信多开工具 · 使用说明</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #0F172A;
+    color: #E2E8F0;
+    line-height: 1.8;
+  }
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 24px 72px;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(34,197,94,0.12);
+    border: 1px solid rgba(34,197,94,0.35);
+    color: #22C55E;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 4px 14px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .meta {
+    color: #64748B;
+    font-size: 14px;
+    margin-bottom: 36px;
+  }
+  .meta b { color: #94A3B8; font-weight: 600; }
+  .section {
+    background: #10192E;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 28px 28px 12px;
+    margin-bottom: 20px;
+  }
+  .section h2 {
+    font-size: 19px;
+    color: #22C55E;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .section p { margin-bottom: 12px; color: #C7D2E0; font-size: 15px; }
+  .section ul, .section ol { margin: 0 0 16px 22px; }
+  .section li { margin-bottom: 8px; color: #C7D2E0; font-size: 15px; }
+  .section b, .section strong { color: #fff; }
+  .section code {
+    background: rgba(34,197,94,0.1);
+    color: #4ADE80;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 16px;
+    font-size: 14px;
+  }
+  th {
+    text-align: left;
+    background: rgba(34,197,94,0.08);
+    color: #22C55E;
+    font-weight: 700;
+    padding: 10px 14px;
+  }
+  td {
+    padding: 10px 14px;
+    color: #C7D2E0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .qa { margin-bottom: 16px; }
+  .qa .q { color: #fff; font-weight: 700; margin-bottom: 4px; }
+  .qa .a { color: #C7D2E0; font-size: 15px; }
+  .warn {
+    background: rgba(245,158,11,0.07);
+    border: 1px solid rgba(245,158,11,0.3);
+    border-left: 3px solid #F59E0B;
+    padding: 14px 16px;
+    border-radius: 0 10px 10px 0;
+    color: #FCD34D;
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+  .warn b { color: #FDE68A; }
+  .warn ul { margin: 8px 0 0 18px; }
+  .warn li { margin-bottom: 6px; color: #FBBF24; font-size: 14px; }
+  .tip {
+    background: rgba(34,197,94,0.06);
+    border-left: 3px solid #22C55E;
+    padding: 12px 16px;
+    border-radius: 0 10px 10px 0;
+    color: #C7D2E0;
+    font-size: 14px;
+    margin: 12px 0;
+  }
+  .footer-note {
+    text-align: center;
+    color: #64748B;
+    font-size: 13px;
+    margin-top: 40px;
+  }
+  @media (max-width: 480px) {
+    .container { padding: 32px 16px 56px; }
+    h1 { font-size: 24px; }
+    .section { padding: 22px 20px 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
 
-> 版本：v1.0.0 · 平台：Windows 10/11
-> 定位：电脑端微信多账号同时在线（多开），本地运行、不改动微信程序本体
+  <div class="badge">使用说明 · v1.0.0 · Windows 10/11</div>
+  <h1>微信多开工具 · 使用说明</h1>
+  <div class="meta"><b>定位</b>：电脑端微信多账号同时在线（多开），本地运行、不改动微信程序本体</div>
 
----
+  <div class="section">
+    <h2>一、工具简介</h2>
+    <p>微信多开工具让你在一台电脑上<b>同时登录多个微信账号</b>（支持微信 PC 版 / 微信 4.x）。</p>
+    <p><b>工作原理</b>：工具自动检测你的微信安装目录 → 复制生成多个独立「副本」→ 每个副本从不同路径启动，彼此互不干扰，每个窗口登录一个账号即可。</p>
+    <ul>
+      <li>🔒 <b>本地离线运行</b>，不修改、不注入、不逆向微信程序本体</li>
+      <li>⚡ <b>自动检测</b>安装路径，无需手动配置</li>
+      <li>🆓 <b>绿色单文件</b>、免安装、完全免费</li>
+    </ul>
+  </div>
 
-## 一、工具简介
+  <div class="section">
+    <h2>二、使用前请务必阅读</h2>
+    <div class="warn">
+      ⚠️ 微信多开属于<b>非官方用法</b>，可能违反《微信软件许可及服务协议》，存在账号被风控、限制甚至封禁的风险。本工具<b>不提供任何账号安全保障</b>：
+      <ul>
+        <li>无法保证你的账号一定不会被限制或封禁</li>
+        <li>请勿在重要账号（工作号、绑定资金等）上冒险，建议先用小号测试</li>
+        <li>因使用本工具导致的任何账号异常、功能受限或封禁，<b>风险由使用者自行承担</b>，与作者及本站无关</li>
+      </ul>
+    </div>
+  </div>
 
-微信多开工具让你在一台电脑上同时登录多个微信账号（微信 PC 版 / 微信 4.x 均适用）。
+  <div class="section">
+    <h2>三、安装与运行</h2>
+    <ol>
+      <li>下载 <code>微信多开工具.exe</code>（约 10.7MB）</li>
+      <li><b>双击运行</b>，绿色免安装、无需配置</li>
+      <li>若被杀毒软件提示，多为单文件打包的常见误报，可加入信任名单后使用</li>
+    </ol>
+  </div>
 
-**工作原理**：工具会自动检测你的微信安装目录，复制生成多个独立的「副本」安装，每个副本从不同路径启动，彼此互不干扰，从而打开多个微信实例，每个窗口登录一个账号即可。
+  <div class="section">
+    <h2>四、快速上手（五步）</h2>
+    <p><b>第 1 步：检测路径</b></p>
+    <p>点击「检测安装路径」，确认识别到你的微信安装目录。</p>
+    <p><b>第 2 步：设置数量</b></p>
+    <p>在「实例数量」中设置要登录的账号数（默认 1，可 1–10）。</p>
+    <p><b>第 3 步：开始多开</b></p>
+    <p>点击「开始多开」，工具自动复制副本并逐个启动实例。首次会自动复制微信安装目录，请稍等片刻。</p>
+    <p><b>第 4 步：扫码登录</b></p>
+    <p>在每个弹出的微信窗口中扫码登录不同账号。</p>
+    <p><b>第 5 步：一键关闭</b></p>
+    <p>点击「结束全部微信」可一键关闭所有实例。</p>
+  </div>
 
-**核心原则：**
-- 🔒 全程本地运行，**不修改、不注入、不逆向**微信程序本体
-- ⚡ 自动检测微信安装路径，无需手动配置
-- 🆓 绿色单文件、免安装、完全免费
+  <div class="section">
+    <h2>五、参数说明</h2>
+    <table>
+      <tr><th>参数</th><th>说明</th></tr>
+      <tr><td>实例数量</td><td>同时打开的微信数量（1–10），每个对应一个副本目录</td></tr>
+      <tr><td>副本目录</td><td>副本存放位置，默认 <code>C:\Users\&lt;用户名&gt;\WeChatMulti</code>，可自定义</td></tr>
+      <tr><td>强制重新复制</td><td>微信升级后旧副本会失效，勾选后强制重新生成副本</td></tr>
+    </table>
+    <div class="tip">提示：副本目录仅用于存放微信程序副本，不影响你原有微信的安装与数据。</div>
+  </div>
 
----
+  <div class="section">
+    <h2>六、常见问题</h2>
+    <div class="qa">
+      <div class="q">Q1：副本打不开 / 启动报错？</div>
+      <div class="a">微信升级后旧副本会过期，勾选「强制重新复制」重新生成副本即可。</div>
+    </div>
+    <div class="qa">
+      <div class="q">Q2：会不会修改我的微信？</div>
+      <div class="a">不会。工具只复制安装目录并从副本启动，原微信安装与数据不受任何影响。</div>
+    </div>
+    <div class="qa">
+      <div class="q">Q3：两个实例的数据会串吗？</div>
+      <div class="a">不会。每个账号的数据按账号独立存放于微信数据目录，正常使用互不干扰。</div>
+    </div>
+    <div class="qa">
+      <div class="q">Q4：断网能用吗？</div>
+      <div class="a">多开本身不联网，但微信登录需要网络（这是微信官方的要求）。</div>
+    </div>
+  </div>
 
-## 二、重要提示与免责声明（请务必阅读）
+  <div class="section">
+    <h2>七、隐私与安全</h2>
+    <ul>
+      <li>工具完全<b>本地运行</b>，不上传、不收集任何信息</li>
+      <li>不修改、不注入、不逆向微信程序本体</li>
+      <li>副本数据存于本机，请自行妥善保管账号与数据</li>
+    </ul>
+  </div>
 
-> ⚠️ 微信多开属于**非官方用法**，与微信官方的单实例限制不同，可能违反《微信软件许可及服务协议》，存在**账号被风控、限制甚至封禁**的风险。
->
-> 本工具仅按通用的「目录复制」方案实现本地多开，**不提供任何账号安全保障**：
-> - 无法保证你的账号一定不会被限制或封禁；
-> - 请勿在重要账号（工作号、绑定资金等）上冒险使用；
-> - 建议先使用小号测试，自行评估风险后再决定是否使用；
-> - 因使用本工具导致的任何账号异常、功能受限或封禁，均与作者及本站无关，**风险由使用者自行承担**。
+  <div class="footer-note">请遵守微信官方规则与当地法律法规，合理使用本工具，风险自负。</div>
 
----
-
-## 三、安装与运行
-
-1. 下载 `微信多开工具.exe`（约 10.7MB）
-2. 双击运行即可，绿色免安装、无需配置
-3. 若被杀毒软件提示，多为单文件打包的常见误报，可加入信任名单后使用
-
----
-
-## 四、快速上手
-
-1. 打开工具，点击「检测安装路径」，确认自动识别到你的微信安装目录
-2. 在「实例数量」中设置要登录的账号数（默认 1，可 1–10）
-3. 点击「开始多开」：首次会自动复制微信安装目录生成副本，随后逐个启动实例
-4. 在弹出的每个微信窗口中扫码登录不同账号
-5. 点击「结束全部微信」可一键关闭所有实例
-
----
-
-## 五、参数说明
-
-| 项目 | 说明 |
-|------|------|
-| **实例数量** | 同时打开的微信数量（1–10），每个对应一个副本目录 |
-| **副本目录** | 副本存放位置，默认 `C:\Users\你的用户名\WeChatMulti`，可自定义 |
-| **强制重新复制** | 微信升级后旧副本会失效，勾选后强制重新生成副本 |
-
----
-
-## 六、常见问题
-
-### Q1：副本打不开 / 启动报错？
-微信升级后旧副本可能过期，勾选「强制重新复制」重新生成副本即可。
-
-### Q2：会不会修改我的微信？
-不会。工具只复制安装目录并从副本启动，原微信安装不受任何影响。
-
-### Q3：两个实例的数据会串吗？
-每个账号的数据按账号独立存放于微信数据目录，正常使用互不干扰。
-
-### Q4：断网能用吗？
-多开本身不联网，但微信登录需要网络（这是微信官方的要求）。
-
----
-
-## 七、隐私与安全
-
-- 工具完全本地运行，无上传、无联网收集任何信息
-- 不修改、不注入、不逆向微信程序
-- 副本数据存于本机，请自行妥善管理
-
----
-
-*请遵守微信官方规则与当地法律法规，合理使用本工具，风险自负。*
+</div>
+</body>
+</html>
